@@ -72,10 +72,11 @@ exports.getCursoConect = async (req, res) => {
 }
 
 exports.createCursoConect = async (req, res) => {
+    var{cursoconect_cursoid, user_cursoId} = req.body;
     await prisma.curso_conect.create({
         data:{
-            user_curso,
-            cursoconect_curso
+            cursoconect_curso: { connect: { idcurso: cursoconect_cursoid }} ,
+            user_curso: { connect: { id_UserName: user_cursoId }}
         }
     }).then((result) => {
         res.json(result)
