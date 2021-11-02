@@ -67,6 +67,7 @@ module.exports = function (app) {
 
     app.route('/carrera/:id')
         .delete(carreraController.deleteCarrera)
+        
     // TYPES USER
     app.route('/typesUser')
         .get(userController.getAllTypeUser)
