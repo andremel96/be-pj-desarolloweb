@@ -73,6 +73,7 @@ exports.getCarreraConect = async (req, res) => {
 }
 
 exports.createCarreraConect = async (req, res) => {
+    var{carreraconect_carreraid, user_carreraId} = req.body;
     await prisma.carrera_conect.create({
         data:{
             carreraconect_carreraid,
