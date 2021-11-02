@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator docs {
+  provider = "node node_modules/prisma-docs-generator"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+///comienzo de modelado
+model types_user {
+  idTypes_User   Int     @id @unique @default(autoincrement())
+  name_typesUser String  @db.VarChar(25)
+  users          users[]
+}
+
+model curso {
+  idcurso       Int            @id @unique @default(autoincrement())
+  idcursoNumero String         @unique @db.VarChar(25)
+  name_curso    String         @db.VarChar(75)
+  curso_conect  curso_conect[]
+  user_nota     user_nota[]
+  homework      homework[]
+}
+
+model carrera {
+  idCarrera       Int              @id @unique @default(autoincrement())
+  idcarreraNumero String           @unique @db.VarChar(25)
+  name_carrera    String           @db.VarChar(100)
+  carrera_conect  carrera_conect[]
+  user_nota       user_nota[]
+}
+
+model carrera_conect {
+  idcarrera_conect        Int      @id @unique @default(autoincrement())
+  ///falta foreykey user y carrera
+  user_carrera            users?   @relation(fields: [user_carreraId], references: [id_UserName])
+  user_carreraId          Int?
+  carreraconect_carrera   carrera? @relation(fields: [carreraconect_carreraid], references: [idCarrera])
+  carreraconect_carreraid Int?
+
+}
+
+model curso_conect {
+  idcurso_conect      Int    @id @unique @default(autoincrement())
+  ///falta foreykey user y curso
+  user_curso          users? @relation(fields: [user_cursoId], references: [id_UserName])
+  user_cursoId        Int?
+  cursoconect_curso   curso? @relation(fields: [cursoconect_cursoid], references: [idcurso])
+  cursoconect_cursoid Int?
+}
+
+model users {
+  id_UserName    Int              @id @unique @default(autoincrement())
+  iduserNumero   String           @unique @db.VarChar(25)
+  user_name      String           @unique@db.VarChar(75)
+  password       String           @db.VarChar(64)
+  name           String           @db.VarChar(75)
+  last_name      String           @db.VarChar(75)
+  ///falta fk de typeuser
+  user_type      types_user?      @relation(fields: [user_typeid], references: [idTypes_User])
+  user_typeid    Int?
+  carrera_conect carrera_conect[]
+  curso_conect   curso_conect[]
+  user_nota      user_nota[]
+}
+
+model user_nota {
+  iduser_notas      Int      @id @unique @default(autoincrement())
+  nota              Int
+  description_notas String   @db.VarChar(100)
+  ///falta foreykey user,carrera y curso
+  user_nota         users?   @relation(fields: [user_notaId], references: [id_UserName])
+  user_notaId       Int?
+  curso_nota        curso?   @relation(fields: [curso_notaid], references: [idcurso])
+  curso_notaid      Int?
+  carrera_nota      carrera? @relation(fields: [carrera_notaid], references: [idCarrera])
+  carrera_notaid    Int?
+}
+
+model homework {
+  id_homework          Int              @id @unique @default(autoincrement())
+  name_homework        String           @db.VarChar(100)
+  description_homework String           @db.VarChar(100)
+  nota_homework        Int
+  delivary_date        DateTime         @default(now())           
+  due_date             DateTime         @default(now())     
+  ///Fk con tabla que conecta curso y users
+  cursoconect_curso    curso?           @relation(fields: [cursoconect_cursoid], references: [idcurso])
+  cursoconect_cursoid  Int?
+  conect_status        status_homework? @relation(fields: [conect_statusid], references: [id_status])
+  conect_statusid      Int?
+}
+
+model status_homework {
+  id_status   Int        @id @unique @default(autoincrement())
+  name_status String     @db.VarChar(25)
+  homework    homework[]
+}
