@@ -76,8 +76,8 @@ exports.createCarreraConect = async (req, res) => {
     var{carreraconect_carreraid, user_carreraId} = req.body;
     await prisma.carrera_conect.create({
         data:{
-            carreraconect_carreraid,
-            user_carreraId
+            carreraconect_carrera: { connect: { idCarrera: carreraconect_carreraid }} ,
+            user_carrera: { connect: { id_UserName: user_carreraId }}
         }
     }).then((result) => {
         res.json(result)
