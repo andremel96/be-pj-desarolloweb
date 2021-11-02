@@ -87,8 +87,8 @@ exports.createUser = async (req, res) => {
                 name,
                 last_name,
                 user_typeid: 2,
-                carrera_conect: { connect: { carrera: usercarrera } },
-                curso_conect: { connect: { curso: usercurso } },
+                // carrera_conect: { connect: { carrera: usercarrera } },
+                // curso_conect: { connect: { curso: usercurso } },
             }
         }).then((result) => {
             res.json(result)
