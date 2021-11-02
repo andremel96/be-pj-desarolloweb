@@ -42,8 +42,8 @@ exports.createCurso = async (req, res) => {
 }
 
 exports.deleteCurso = async (req, res) => {
-    const { id } = req.params
-    const deleteCurso = await prisma.post.delete({
+    let { id } = req.params
+    let deleteCurso = await prisma.curso.delete({
         where: {
             idcurso: Number(id)
         }

@@ -22,7 +22,7 @@ exports.updateCarrera= async (req, res) => {
     let id = req.params.id
     var { idcarreraNumero, name_carrera} = req.body;
     let updateCarrera = await prisma.carrera.update({
-        where: { idcurso: Number(id) || undefined },
+        where: { idCarrera: Number(id) || undefined },
         data: {idcarreraNumero, name_carrera},
     })
     res.json(updateCarrera)

@@ -52,8 +52,8 @@ module.exports = function (app) {
     app.route('/curso/:id')
         .get(cursoController.getAllCursos)
         .put(cursoController.updateCurso)
-        
-    app.route('/curso/:id')
+
+    app.delete('/curso/:id')
         .delete(cursoController.deleteCurso)
 
     // CARRERA
@@ -62,9 +62,11 @@ module.exports = function (app) {
         .post(carreraController.createCarrera)
 
     app.route('/carrera/:id')
-        .delete(carreraController.deleteCarrera)
+        .get(carreraController.getCarrera)
         .put(carreraController.updateCarrera)
 
+    app.route('/carrera/:id')
+        .delete(carreraController.deleteCarrera)
     // TYPES USER
     app.route('/typesUser')
         .get(userController.getAllTypeUser)
