@@ -12,7 +12,7 @@ module.exports = function (app) {
     var authController = require('../controller/authController')
     var csvController = require('../controller/csvController')
     // USUARIO
-    app.route('/v1/users/')
+    app.route('/users/')
         //.get(authController.auth, userController.getAllUsers)
         .get(userController.getAllUsers)
         .post(userController.createUser)
