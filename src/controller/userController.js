@@ -60,7 +60,7 @@ exports.getUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     let id = req.params.id
-    var { iduserNumero,user_name,name, last_name} = req.body;
+    var { iduserNumero, user_name, name, last_name } = req.body;
     let oneUser = await prisma.users.findUnique(
         {
             where: {
@@ -70,30 +70,34 @@ exports.updateUser = async (req, res) => {
     )
     let updatedUser = await prisma.users.update({
         where: { id_UserName: Number(id) || undefined },
-        data: { iduserNumero,user_name,name, password:oneUser.password, last_name},
+        data: { iduserNumero, user_name, name, password: oneUser.password, last_name },
     })
     delete updatedUser.password
     res.json(updatedUser)
 }
 
 exports.createUser = async (req, res) => {
-    var { iduserNumero, user_name, password, name, last_name } = req.body;
-    await prisma.users.create({
-        data: {
-            iduserNumero,
-            user_name,
-            password: passwordEncrypt.cryptPassword(password),
-            name,
-            last_name,
-            user_typeid: 2,
-            carrera_conect,
-            curso_conect,
-        }
-    }).then((result) => {
-        res.json(result)
-    }).catch(error => {
+    try {
+        var { iduserNumero, user_name, password, name, last_name } = req.body;
+        await prisma.users.create({
+            data: {
+                iduserNumero,
+                user_name,
+                password: passwordEncrypt.cryptPassword(password),
+                name,
+                last_name,
+                user_typeid: 2,
+                carrera_conect,
+                curso_conect,
+            }
+        }).then((result) => {
+            res.json(result)
+        }).catch(error => {
+            res.json({ ex: error, description: error.code === 'P2002' ? "El carnet ya existe" : "Ha ocurrido un error desconcido" })
+        })
+    } catch (error) {
         res.json({ ex: error, description: error.code === 'P2002' ? "El carnet ya existe" : "Ha ocurrido un error desconcido" })
-    })
+    }
 }
 
 exports.deleteUser = async (req, res) => {
@@ -131,10 +135,10 @@ exports.getTypeUser = async (req, res) => {
 
 exports.updateTypeUser = async (req, res) => {
     let id = req.params.id
-    var { name_typesUser} = req.body;
+    var { name_typesUser } = req.body;
     let updatedTypeUser = await prisma.Type_User.update({
         where: { idTypes_User: Number(id) || undefined },
-        data: { name_typesUser},
+        data: { name_typesUser },
     })
     res.json(updatedTypeUser)
 }
@@ -188,10 +192,10 @@ exports.getUser_nota = async (req, res) => {
 
 exports.updateUser_nota = async (req, res) => {
     let id = req.params.id
-    var { nota, description_notas, user_nota, curso_nota, carrera_nota} = req.body;
+    var { nota, description_notas, user_nota, curso_nota, carrera_nota } = req.body;
     let updateUser_nota = await prisma.user_nota.update({
         where: { iduser_notas: Number(id) || undefined },
-        data: { nota, description_notas, user_nota, curso_nota, carrera_nota},
+        data: { nota, description_notas, user_nota, curso_nota, carrera_nota },
     })
     res.json(updateUser_nota)
 }
