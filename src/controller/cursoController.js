@@ -19,19 +19,19 @@ exports.getCurso = async (req, res) => {
 
 exports.updateCurso= async (req, res) => {
     let id = req.params.id
-    var { idcursonNumero, name_curso} = req.body;
+    var { idcursoNumero, name_curso} = req.body;
     let updateCurso = await prisma.curso.update({
         where: { idcurso: Number(id) || undefined },
-        data: {idcursonNumero, name_curso},
+        data: {idcursoNumero, name_curso},
     })
     res.json(updateCurso)
 }
 
 exports.createCurso = async (req, res) => {
-    var{idcursonNumero, name_curso} = req.body;
+    var{idcursoNumero, name_curso} = req.body;
     await prisma.curso.create({
         data:{
-            idcursonNumero,
+            idcursoNumero,
             name_curso
         }
     }).then((result) => {

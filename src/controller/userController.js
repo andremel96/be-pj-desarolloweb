@@ -78,7 +78,7 @@ exports.updateUser = async (req, res) => {
 
 exports.createUser = async (req, res) => {
     try {
-        var { iduserNumero, user_name, password, name, last_name } = req.body;
+        var { iduserNumero, user_name, password, name, last_name, usercarrera, usercurso } = req.body;
         await prisma.users.create({
             data: {
                 iduserNumero,
@@ -87,8 +87,8 @@ exports.createUser = async (req, res) => {
                 name,
                 last_name,
                 user_typeid: 2,
-                carrera_conect,
-                curso_conect,
+                carrera_conect: { connect: { carrera: usercarrera } },
+                curso_conect: { connect: { curso: usercurso } },
             }
         }).then((result) => {
             res.json(result)
