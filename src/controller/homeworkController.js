@@ -2,14 +2,14 @@ var prisma = require('../model/prismaModel')
 
 //----------------------------TAREAS
 exports.getAllHomework = async (req, res) => {
-    let homework = await prisma.homework.findMany(
+    let homeworks = await prisma.homework.findMany(
         {
             select: {
                 id_homework: true,
                 name_homework: true,
                 description_homework: true,
                 nota_homework: true,
-                cursoconect_cursoid: {
+                cursoconect_curso: {
                     select: {
                         idcurso: true,
                         name_curso: true,
@@ -23,7 +23,7 @@ exports.getAllHomework = async (req, res) => {
                 }
             }
         });
-    res.json({ homework: homework })
+    res.json({ homeworks: homeworks })
 }
 
 
