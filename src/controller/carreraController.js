@@ -57,7 +57,14 @@ exports.deleteCarrera = async (req, res) => {
 
 exports.getAllCarreraConect = async (req, res) => {
     let= id = req.params.id
-    let carrera_conect = await prisma.carrera_conect.findMany();
+    let carrera_conect = await prisma.carrera_conect.findMany(
+        {
+            select: {
+                idCarrera: true,
+                name_carrera: true,
+            }
+        }
+    );
     res.json({ carrera_conect: carrera_conect })
 }
 
