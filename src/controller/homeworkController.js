@@ -9,6 +9,7 @@ exports.getAllHomework = async (req, res) => {
                 name_homework: true,
                 description_homework: true,
                 nota_homework: true,
+                due_date: true,
                 cursoconect_curso: {
                     select: {
                         idcurso: true,
