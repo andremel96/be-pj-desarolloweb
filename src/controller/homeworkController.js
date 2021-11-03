@@ -4,22 +4,24 @@ var prisma = require('../model/prismaModel')
 exports.getAllHomework = async (req, res) => {
     let homework = await prisma.homework.findMany(
         {
-            id_homework: true,
-            name_homework: true,
-            description_homework: true,
-            nota_homework: true,
-            delivary_date: true,
-            due_date: true,
             select: {
-                cursoconect_cursoid: {
-                    select: {
-                        idcurso: true,
-                        name_curso: true,
+                id_homework: true,
+                name_homework: true,
+                description_homework: true,
+                nota_homework: true,
+                delivary_date: true,
+                due_date: true,
+                select: {
+                    cursoconect_cursoid: {
+                        select: {
+                            idcurso: true,
+                            name_curso: true,
+                        }
+                    },
+                    conect_status: {
+                        conect_statusid: true,
+                        name_status: true,
                     }
-                },
-                conect_status: {
-                    conect_statusid: true,
-                    name_status: true,
                 }
             }
         });
