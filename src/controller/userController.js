@@ -102,7 +102,7 @@ exports.createUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
     const { id } = req.params
-    const deleteUserResult = await prisma.post.delete({
+    const deleteUserResult = await prisma.user.delete({
         where: {
             id_UserName: Number(id)
         }
