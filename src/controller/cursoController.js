@@ -56,15 +56,19 @@ exports.deleteCurso = async (req, res) => {
 
 exports.getAllCursoConect = async (req, res) => {
     let= id = req.params.id
-    let curso_conect = await prisma.curso_conect.findMany
-    (
+    let curso_conect = await prisma.curso_conect.findMany(
         {
+            idcarrera_conect: true,
             select: {
                 cursoconect_curso: {
                     select: {
                         idcurso: true,
                         name_curso: true,
                     }
+                },
+                user_curso :{ 
+                    id_UserName: true,
+                    user_name: true,
                 }
             }
         });
