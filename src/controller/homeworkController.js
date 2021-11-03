@@ -19,8 +19,10 @@ exports.getAllHomework = async (req, res) => {
                         }
                     },
                     conect_status: {
+                        select: {
                         conect_statusid: true,
                         name_status: true,
+                        }
                     }
                 }
             }
