@@ -11,18 +11,16 @@ exports.getAllHomework = async (req, res) => {
                 nota_homework: true,
                 delivary_date: true,
                 due_date: true,
-                select: {
-                    cursoconect_cursoid: {
-                        select: {
-                            idcurso: true,
-                            name_curso: true,
-                        }
-                    },
-                    conect_status: {
-                        select: {
+                cursoconect_cursoid: {
+                    select: {
+                        idcurso: true,
+                        name_curso: true,
+                    }
+                },
+                conect_status: {
+                    select: {
                         conect_statusid: true,
                         name_status: true,
-                        }
                     }
                 }
             }
