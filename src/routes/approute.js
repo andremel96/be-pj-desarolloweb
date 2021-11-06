@@ -10,6 +10,7 @@ module.exports = function (app) {
     var cursoController = require('../controller/cursoController')
     var carreraController = require('../controller/carreraController')
     var homeworkController = require('../controller/homeworkController')
+    var botController = require('../controller/botController')
     var authController = require('../controller/authController')
     var csvController = require('../controller/csvController')
     // USUARIO
@@ -103,6 +104,14 @@ module.exports = function (app) {
 
     app.route('/UserNota/:id')
         .delete(userController.deleteUser_nota)
+
+
+    //BOT
+    app.route('/bot')
+    .get(botController.getbotAll)
+    .post(botController.createbot)
+    .put(botController.updatebot)
+
     // csv
     app.route("/upload")
         .post(upload.single('file'), csvController.upload)
