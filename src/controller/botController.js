@@ -8,7 +8,6 @@ exports.getbotAll = async (req, res) => {
                 estado_bot: true,
                 user_bot: {
                     select: {
-                        user_botId: true,
                         id_UserName: true,
                     }
                 }
