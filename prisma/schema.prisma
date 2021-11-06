@@ -108,7 +108,7 @@ model status_homework {
 
 model bot{
   id_bot Int @id @unique @default(autoincrement())
-  estado_bot Int?
+  estado_bot String     @db.VarChar(10)
   /// FK tabla user
   user_bot         users? @relation(fields: [user_botId], references: [id_UserName])
   user_botId        Int?
