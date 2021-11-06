@@ -1,15 +1,15 @@
 var prisma = require('../model/prismaModel')
 // CURSO
-exports.getAllCursos= async (req, res) => {
+exports.getAllCursos = async (req, res) => {
     let curso = await prisma.curso.findMany();
     res.json({ curso: curso })
 }
 
 exports.getCurso = async (req, res) => {
-    let= id = req.params.id
+    let = id = req.params.id
     let curso = await prisma.curso.findUnique(
         {
-            where:{
+            where: {
                 idcurso: Number(id)
             }
         }
@@ -17,20 +17,20 @@ exports.getCurso = async (req, res) => {
     res.json(curso)
 }
 
-exports.updateCurso= async (req, res) => {
+exports.updateCurso = async (req, res) => {
     let id = req.params.id
-    var { idcursoNumero, name_curso} = req.body;
+    var { idcursoNumero, name_curso } = req.body;
     let updateCurso = await prisma.curso.update({
         where: { idcurso: Number(id) || undefined },
-        data: {idcursoNumero, name_curso},
+        data: { idcursoNumero, name_curso },
     })
     res.json(updateCurso)
 }
 
 exports.createCurso = async (req, res) => {
-    var{idcursoNumero, name_curso} = req.body;
+    var { idcursoNumero, name_curso } = req.body;
     await prisma.curso.create({
-        data:{
+        data: {
             idcursoNumero,
             name_curso
         }
@@ -55,30 +55,30 @@ exports.deleteCurso = async (req, res) => {
 // CURSO CONECT
 
 exports.getAllCursoConect = async (req, res) => {
-    let= id = req.params.id
+    let = id = req.params.id
     let curso_conect = await prisma.curso_conect.findMany(
         {
             select: {
-            idcurso_conect: true,
+                idcurso_conect: true,
                 cursoconect_curso: {
                     select: {
                         idcurso: true,
                         name_curso: true,
                     }
                 },
-                user_curso :{ 
+                user_curso: {
                     select: {
-                    id_UserName: true,
-                    user_name: true,
+                        id_UserName: true,
+                        user_name: true,
                     }
                 }
-        }
+            }
         });
     res.json({ curso_conect: curso_conect })
 }
 
 exports.getCursoConect = async (req, res) => {
-    let= id = await prisma.curso_conect.findUnique(
+    let = id = await prisma.curso_conect.findUnique(
         {
             where: {
                 idcurso_conect: Number(id)
@@ -89,11 +89,11 @@ exports.getCursoConect = async (req, res) => {
 }
 
 exports.createCursoConect = async (req, res) => {
-    var{cursoconect_cursoid, user_cursoId} = req.body;
+    var { cursoconect_cursoid, user_cursoId } = req.body;
     await prisma.curso_conect.create({
-        data:{
-            cursoconect_curso: { connect: { idcurso: cursoconect_cursoid }} ,
-            user_curso: { connect: { id_UserName: user_cursoId }}
+        data: {
+            cursoconect_curso: { connect: { idcurso: cursoconect_cursoid } },
+            user_curso: { connect: { id_UserName: user_cursoId } }
         }
     }).then((result) => {
         res.json(result)
@@ -114,25 +114,23 @@ exports.deleteCursoConect = async (req, res) => {
 }
 
 exports.getCursoUser = async (req, res) => {
-    let = id = req.params.id
-    let curso_conect = await prisma.curso_conect.findMany(
+    let id = req.params.id
+    let curso_conect = await prisma.users.findMany(
         {
             select: {
-                idcurso_conect: false,
-                cursoconect_curso: {
+                curso_conect: {
                     select: {
-                        idcurso: true,
-                        name_curso: true,
+                        cursoconect_curso: {
+                            select: {
+                                idcurso:true,
+                                name_curso:true,
+                            }
+                        }
                     }
-                },
-                user_curso: {
-                    select: {
-                        id_UserName: true,
-                        user_name: true,
-                    }
-                },
-                where: { id_UserName: Number(id)}
-            }
-        });
+                }
+            },
+            where: { id_UserName: Number(id) }
+        }
+    );
     res.json({ curso_conect: curso_conect })
 }
