@@ -52,6 +52,7 @@ exports.createbot = async (req, res) => {
     }).then((result) => {
         res.json({status:'success',result})
     }).catch(error => {
+        console.log(error);
         res.json({ status:'error',ex: error, description: error.code ===  "Ha ocurrido un error desconcido" })
     })
 }
