@@ -17,6 +17,29 @@ exports.getbotAll = async (req, res) => {
     res.json({ bot: bot })
 }
 
+exports.getBot = async (req, res) => {
+    let id = req.params.id
+    let bot = await prisma.bot.findFirst(
+        {
+            select: {
+                id_bot: true,
+                estado_bot: true,
+                chatId:true,
+                user_bot: {
+                    select: {
+                        id_UserName: true,
+                        user_name:true
+                    }
+                }
+            },
+            where:{
+                chatId:Number(id)
+            }
+        });
+
+    res.json({ bot: bot })
+}
+
 
 exports.createbot = async (req, res) => {
     var{estado_bot, user_botId,chatId} = req.body;
@@ -35,12 +58,11 @@ exports.createbot = async (req, res) => {
 
 exports.updatebot= async (req, res) => {
     let id = req.params.id
-    var { estado_bot, user_botId} = req.body;
+    var { estado_bot} = req.body;
     let updatebot = await prisma.bot.update({
-        where: { id_bot: Number(id) || undefined },
+        where: { chatId: Number(id) || undefined },
         data: {
-            estado_bot, 
-            user_bot: { connect: { id_UserName: user_botId }}
+            estado_bot
         },
     })
     res.json(updatebot)

@@ -110,8 +110,10 @@ module.exports = function (app) {
     app.route('/bot')
     .get(botController.getbotAll)
     .post(botController.createbot)
+    
+    app.route('/bot/:id')
     .put(botController.updatebot)
-
+    .get(botController.getBot)
     // csv
     app.route("/upload")
         .post(upload.single('file'), csvController.upload)
