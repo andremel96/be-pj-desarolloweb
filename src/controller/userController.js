@@ -35,15 +35,18 @@ exports.login = async (req, res) => {
     });
 
     if (!user) {
-        res.status(404).json({ message: 'User not registered' })
+        res.status(200).json({ status: 'error', message: 'Usuario no registrado' })
+    } else {
+        console.log(passwordEncrypt.cryptPassword(password))
+        const checkPassword = passwordEncrypt.comparePassword(password, user.password)
+        if (!checkPassword) {
+            res.status(200).json({ status: 'error', message: "Usuario o contraseña incorrecta" })
+        } else {
+            delete user.password
+            const accessToken = await jwt.signAccessToken(user)
+            res.json({ ...user, status: 'success', accessToken })
+        }
     }
-    const checkPassword = passwordEncrypt.comparePassword(password, user.password)
-    if (!checkPassword) {
-        res.status(401).json({ message: "Usuario o contraseña incorrecta" })
-    }
-    delete user.password
-    const accessToken = await jwt.signAccessToken(user)
-    res.json({ ...user, accessToken })
 }
 
 exports.getUser = async (req, res) => {
@@ -78,7 +81,7 @@ exports.updateUser = async (req, res) => {
 
 exports.createUser = async (req, res) => {
     try {
-        var { iduserNumero, user_name, password, name, last_name} = req.body;
+        var { iduserNumero, user_name, password, name, last_name } = req.body;
         await prisma.users.create({
             data: {
                 iduserNumero,
