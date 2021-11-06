@@ -170,7 +170,21 @@ exports.gethomeworkuser = async (req, res) => {
                         cursoconect_curso: {
                             select: {
                                 name_curso:true,
-                                homework: true
+                                homework: {
+                                    select: {
+                                        id_homework: true,
+                                        name_homework: true,
+                                        description_homework: true,
+                                        nota_homework: true,
+                                        due_date: true,
+                                        conect_status: {
+                                            select: {
+                                                id_status: true,
+                                                name_status: true,
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         },
                     },
