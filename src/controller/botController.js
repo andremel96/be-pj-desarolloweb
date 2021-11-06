@@ -19,11 +19,12 @@ exports.getbotAll = async (req, res) => {
 
 
 exports.createbot = async (req, res) => {
-    var{estado_bot, user_botId} = req.body;
+    var{estado_bot, user_botId,chatId} = req.body;
     await prisma.bot.create({
         data:{
             estado_bot,
-            user_bot: { connect: { id_UserName: user_botId }}
+            chatId,
+            user_botId
         }
     }).then((result) => {
         res.json({status:'success',result})
