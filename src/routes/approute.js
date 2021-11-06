@@ -52,7 +52,7 @@ module.exports = function (app) {
 
     // CURSO
     app.route('/curso')
-        .get(cursoController.getAllCursos)
+        .get(authController.auth ,cursoController.getAllCursos)
         .post(cursoController.createCurso)
 
     app.route('/curso/:id')
