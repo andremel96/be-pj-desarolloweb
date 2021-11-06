@@ -26,9 +26,9 @@ exports.createbot = async (req, res) => {
             user_bot: { connect: { id_UserName: user_botId }}
         }
     }).then((result) => {
-        res.json(result)
+        res.json({status:'success',result})
     }).catch(error => {
-        res.json({ ex: error, description: error.code ===  "Ha ocurrido un error desconcido" })
+        res.json({ status:'error',ex: error, description: error.code ===  "Ha ocurrido un error desconcido" })
     })
 }
 
