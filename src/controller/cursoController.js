@@ -118,6 +118,9 @@ exports.getCursoUser = async (req, res) => {
     let curso_conect = await prisma.users.findMany(
         {
             select: {
+                id_UserName:true,
+                name:true,
+                last_name:true,
                 curso_conect: {
                     select: {
                         cursoconect_curso: {
