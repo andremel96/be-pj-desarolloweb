@@ -112,3 +112,27 @@ exports.deleteCursoConect = async (req, res) => {
     )
     res.json(deleteCursoConect)
 }
+
+exports.getcursouser = async (req, res) => {
+    let = id = req.params.id
+    let curso_conect = await prisma.curso_conect.findMany(
+        {
+            select: {
+                idcurso_conect: false,
+                cursoconect_curso: {
+                    select: {
+                        idcurso: true,
+                        name_curso: true,
+                    }
+                },
+                user_curso: {
+                    select: {
+                        id_UserName: true,
+                        user_name: true,
+                    }
+                },
+                where: { id_UserName: Number(id)}
+            }
+        });
+    res.json({ curso_conect: curso_conect })
+}
