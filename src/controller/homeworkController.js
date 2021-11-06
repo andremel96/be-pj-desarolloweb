@@ -132,3 +132,59 @@ exports.deleteHomeworkStatus = async (req, res) => {
     )
     res.json(deletestatus_homework)
 }
+
+
+// ----------------------------------------------------------------tareas por medio del username
+
+exports.gethomeworkuser = async (req, res) => {
+    const { username } = req.params
+    let homeworks = await prisma.users.findMany(
+        {
+            select: {
+                id_UserName: false,
+                iduserNumero: true,
+                user_name: true,
+                password: false,
+                name: true,
+                last_name: true,
+                user_type: false,
+                user_typeid: false,
+                carrera_conect: {
+                    select: {
+                        idcarrera_conect: false,
+                        user_carrera: false,
+                        user_carreraId: false,
+                        carreraconect_carrera: {
+                            select: {
+                                idCarrera: false,
+                                idcarreraNumero: true,
+                                name_carrera: true
+                            }
+                        },
+                        carreraconect_carreraid: false
+                    }
+                },
+                curso_conect: {
+                    select: {
+                        user_cursoId: true,
+                        cursoconect_curso: {
+                            select: {
+                                name_curso:true,
+                                homework: true
+                            }
+                        },
+                    },
+                    where: {
+                        cursoconect_cursoid: {
+                            not: null
+                        }
+                    }
+                },
+                user_nota: false
+            },
+            where: {
+                user_name: username
+            }
+        });
+    res.json({ homeworks: homeworks })
+}

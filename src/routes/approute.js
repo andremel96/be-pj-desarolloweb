@@ -1,5 +1,6 @@
 'use strict';
-const multer  = require('multer');
+const { get } = require('http');
+const multer = require('multer');
 const storage = multer.memoryStorage();
 var upload = multer({ storage: storage });
 
@@ -36,6 +37,10 @@ module.exports = function (app) {
     app.route('/homeworks/:id')
         .delete(homeworkController.deleteHomework)
 
+    // TAREAS POR USUARIO-CURSO
+    app.route('/homeworkuser/:username')
+        .get(homeworkController.gethomeworkuser)
+
     // ESTATUS TAREAS
     app.route('/HomeworkStatus')
         .get(homeworkController.getAllHomeworkStatus)
@@ -53,7 +58,7 @@ module.exports = function (app) {
         .get(cursoController.getAllCursos)
         .put(cursoController.updateCurso)
         .delete(cursoController.deleteCurso)
-        
+
 
     // CARRERA
     app.route('/carrera')
@@ -100,7 +105,7 @@ module.exports = function (app) {
         .delete(userController.deleteUser_nota)
     // csv
     app.route("/upload")
-        .post(upload.single('file'),csvController.upload)
+        .post(upload.single('file'), csvController.upload)
 
     // jwt
     app.use(authController.notFound)

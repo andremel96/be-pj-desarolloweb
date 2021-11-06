@@ -58,8 +58,8 @@ exports.getAllCursoConect = async (req, res) => {
     let= id = req.params.id
     let curso_conect = await prisma.curso_conect.findMany(
         {
-            idcarrera_conect: true,
             select: {
+            idcurso_conect: true,
                 cursoconect_curso: {
                     select: {
                         idcurso: true,
@@ -67,10 +67,12 @@ exports.getAllCursoConect = async (req, res) => {
                     }
                 },
                 user_curso :{ 
+                    select: {
                     id_UserName: true,
                     user_name: true,
+                    }
                 }
-            }
+        }
         });
     res.json({ curso_conect: curso_conect })
 }
