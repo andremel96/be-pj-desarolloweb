@@ -95,6 +95,7 @@ module.exports = function (app) {
         .post(cursoController.createCursoConect)
 
     app.route('/cursoConect/:id')
+        .get(cursoController.getCursoUser)
         .delete(cursoController.deleteCursoConect)
 
     // USER NOTA
