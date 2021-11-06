@@ -42,7 +42,9 @@ exports.login = async (req, res) => {
             res.status(200).json({ status: 'error', message: "Usuario o contraseña incorrecta" })
         } else {
             delete user.password
-            const accessToken = await jwt.signAccessToken(user)
+            const accessToken = await jwt.signAccessToken(user).catch(error=>{
+                console.log(error);
+            })
             res.json({ ...user, status: 'success', accessToken })
         }
     }
