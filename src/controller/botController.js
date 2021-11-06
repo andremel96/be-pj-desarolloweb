@@ -37,7 +37,7 @@ exports.getBot = async (req, res) => {
             }
         });
 
-    res.json({ bot: bot })
+    res.json({ bot: bot?bot:[] })
 }
 
 
