@@ -8,6 +8,7 @@ module.exports = {
             jwt.sign({ payload }, accessTokenSecret, {
             }, (err, token) => {
                 if (err) {
+                    console.log(err)
                 reject(createError.InternalServerError())
                 }
                 resolve(token)
