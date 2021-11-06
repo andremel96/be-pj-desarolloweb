@@ -37,7 +37,6 @@ exports.login = async (req, res) => {
     if (!user) {
         res.status(200).json({ status: 'error', message: 'Usuario no registrado' })
     } else {
-        console.log(passwordEncrypt.cryptPassword(password))
         const checkPassword = passwordEncrypt.comparePassword(password, user.password)
         if (!checkPassword) {
             res.status(200).json({ status: 'error', message: "Usuario o contraseña incorrecta" })
